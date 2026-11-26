@@ -1,0 +1,58 @@
+/* BarcodeGen — estética de etiqueta industrial: papel, preto e amarelo de segurança */
+:root { --fundo: #f3f1ea; --cartao: #fff; --texto: #151515; --suave: #6d6a60; --borda: #dedad0; --amarelo: #ffd23f; --vermelho: #d64545; }
+[hidden] { display: none !important; }
+* { box-sizing: border-box; min-width: 0; }
+html { background: var(--fundo); }
+body { margin: 0; color: var(--texto); font: 15px/1.5 "Space Grotesk", system-ui, sans-serif; }
+button, input, select, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--texto); outline-offset: 2px; }
+.topo { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 24px; background: var(--texto); color: #fff; flex-wrap: wrap; }
+.marca { margin: 0; font-size: 22px; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+.marca span { color: var(--amarelo); letter-spacing: -2px; font-size: 20px; }
+.abas { display: flex; background: #2b2b2b; border-radius: 10px; padding: 3px; }
+.abas button { border: 0; background: none; padding: 6px 14px; border-radius: 8px; cursor: pointer; font-weight: 600; color: #bbb; }
+.abas [aria-selected="true"] { background: var(--amarelo); color: var(--texto); }
+.app { width: min(1080px, 100%); margin: 0 auto; padding: 24px 16px 48px; display: grid; grid-template-columns: 360px minmax(0, 1fr); gap: 20px; align-items: start; }
+.painel { background: var(--cartao); border: 2px solid var(--texto); border-radius: 14px; padding: 18px; display: grid; gap: 14px; box-shadow: 5px 5px 0 var(--texto); }
+.painel label { display: grid; gap: 4px; font-weight: 600; font-size: 13px; }
+.painel input:not([type=range]):not([type=color]):not([type=checkbox]), .painel select, .painel textarea { border: 2px solid var(--borda); border-radius: 10px; padding: 10px 12px; font: 400 16px "Space Mono", monospace; background: #fdfcf8; }
+.painel input:focus, .painel select:focus, .painel textarea:focus { border-color: var(--texto); outline: none; }
+.painel select { font: 500 14px "Space Grotesk", sans-serif; }
+.painel small { font-weight: 400; color: var(--suave); }
+.painel small.ok { color: #1a7f4b; font-weight: 600; }
+.opcoes { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 14px; border-top: 2px dashed var(--borda); padding-top: 12px; }
+.opcoes input[type=range] { accent-color: var(--texto); }
+.cores { display: flex !important; align-items: center; justify-content: space-between; }
+.cores input { width: 44px; height: 30px; border: 2px solid var(--borda); border-radius: 8px; padding: 0; background: none; cursor: pointer; }
+.chk { display: flex !important; align-items: center; gap: 8px !important; grid-column: 1 / -1; cursor: pointer; }
+.chk input { accent-color: var(--texto); width: 18px; height: 18px; }
+
+.saida { display: grid; gap: 14px; }
+.previa { min-height: 260px; background: repeating-linear-gradient(45deg, #ebe8de 0 10px, #f3f1ea 10px 20px); border-radius: 14px; display: grid; place-items: center; padding: 24px; overflow: auto; border: 2px solid var(--borda); }
+.previa svg { max-width: 100%; height: auto; box-shadow: 0 8px 24px rgba(0, 0, 0, .12); }
+.previa.lote { display: grid; grid-template-columns: repeat(var(--cols, 3), 1fr); gap: 10px; place-items: stretch; align-content: start; }
+.previa.lote .etq { background: #fff; padding: 8px; border-radius: 6px; display: grid; place-items: center; }
+.previa.lote .etq.erro { color: var(--vermelho); font-size: 12px; text-align: center; border: 1px dashed var(--vermelho); }
+.previa.lote svg { box-shadow: none; width: 100%; }
+.erro { margin: 0; color: var(--vermelho); font-weight: 600; background: #fde8e8; border-radius: 10px; padding: 8px 12px; }
+.acoes { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.acoes label { display: flex; gap: 6px; align-items: center; font-weight: 600; }
+.acoes select { border: 2px solid var(--borda); border-radius: 8px; padding: 4px 8px; }
+.btn { border: 2px solid var(--texto); background: var(--amarelo); font-weight: 700; padding: 10px 18px; border-radius: 10px; cursor: pointer; box-shadow: 3px 3px 0 var(--texto); }
+.btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--texto); }
+.btn.ghost { background: var(--cartao); }
+.btn:disabled { opacity: .4; cursor: default; }
+.explica { background: var(--cartao); border-radius: 12px; padding: 12px 16px; border: 2px solid var(--borda); }
+.explica summary { font-weight: 700; cursor: pointer; }
+.explica p { color: var(--suave); margin: 8px 0 0; font-size: 14px; }
+.etiquetas { display: none; }
+.toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: var(--texto); color: #fff; padding: 10px 18px; border-radius: 12px; z-index: 10; }
+@media (max-width: 860px) { .app { grid-template-columns: 1fr; } .previa { min-height: 180px; padding: 14px; } }
+
+@media print {
+  @page { margin: 10mm; }
+  body > *:not(.etiquetas) { display: none !important; }
+  .etiquetas { display: grid !important; grid-template-columns: repeat(var(--cols, 3), 1fr); gap: 4mm; }
+  .etiquetas .etq { border: 1px dashed #bbb; padding: 3mm; display: grid; place-items: center; break-inside: avoid; }
+  .etiquetas svg { width: 100%; height: auto; }
+}

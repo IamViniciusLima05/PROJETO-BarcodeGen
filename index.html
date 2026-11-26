@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BarcodeGen | Gerador de código de barras</title>
+  <meta name="description" content="Gere códigos de barras Code 128, EAN-13, EAN-8 e UPC-A com dígito verificador automático, personalize e baixe em PNG ou SVG, ou imprima etiquetas em lote.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topo">
+    <h1 class="marca"><span aria-hidden="true">▌▍▌▎▌</span> BarcodeGen</h1>
+    <div class="abas" role="tablist">
+      <button role="tab" data-modo="um" aria-selected="true">Um código</button>
+      <button role="tab" data-modo="lote" aria-selected="false">Etiquetas em lote</button>
+    </div>
+  </header>
+
+  <main class="app">
+    <section class="painel">
+      <label>Tipo
+        <select id="tipo">
+          <option value="code128">Code 128 — texto e números</option>
+          <option value="ean13">EAN-13 — produtos (Brasil)</option>
+          <option value="ean8">EAN-8 — embalagens pequenas</option>
+          <option value="upca">UPC-A — produtos (EUA)</option>
+        </select>
+      </label>
+      <label id="campo-um">Conteúdo<input id="conteudo" spellcheck="false" autocomplete="off"><small id="dica"></small></label>
+      <label id="campo-lote" hidden>Um código por linha<textarea id="lote" rows="7" spellcheck="false"></textarea><small id="lote-info"></small></label>
+      <div class="opcoes">
+        <label>Altura <input type="range" id="altura" min="30" max="160" value="90"></label>
+        <label>Largura da barra <input type="range" id="modulo" min="1" max="5" value="2"></label>
+        <label>Margem <input type="range" id="margem" min="0" max="30" value="10"></label>
+        <label class="cores">Barras <input type="color" id="cor" value="#111111"></label>
+        <label class="cores">Fundo <input type="color" id="fundo" value="#ffffff"></label>
+        <label class="chk"><input type="checkbox" id="texto-on" checked> Mostrar números</label>
+      </div>
+    </section>
+
+    <section class="saida">
+      <div class="previa" id="previa"></div>
+      <p class="erro" id="erro" role="alert" hidden></p>
+      <div class="acoes" id="acoes-um">
+        <button class="btn" id="png">⬇ PNG</button>
+        <button class="btn ghost" id="svg">⬇ SVG</button>
+        <button class="btn ghost" id="copiar">📋 Copiar imagem</button>
+      </div>
+      <div class="acoes" id="acoes-lote" hidden>
+        <label>Colunas <select id="colunas"><option>2</option><option selected>3</option><option>4</option></select></label>
+        <button class="btn" id="imprimir">🖨 Imprimir etiquetas</button>
+      </div>
+      <details class="explica"><summary>Qual tipo usar?</summary>
+        <p><b>EAN-13</b> é o código dos produtos no varejo brasileiro (começa com 789 ou 790 para empresas registradas no Brasil). <b>EAN-8</b> é a versão curta para embalagens pequenas. <b>UPC-A</b> é o padrão dos EUA e Canadá. <b>Code 128</b> aceita letras e números e é muito usado em logística, patrimônio e etiquetas internas.</p>
+        <p>Nos códigos de produto, o último número é o <b>dígito verificador</b>: digite sem ele que o site calcula, ou com ele para conferir. Para vender em lojas, o código precisa ser registrado na GS1.</p>
+      </details>
+    </section>
+  </main>
+  <div class="etiquetas" id="etiquetas" aria-hidden="true"></div>
+  <div class="toast" id="toast" role="status" hidden></div>
+  <script src="js/codigos.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>
